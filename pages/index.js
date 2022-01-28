@@ -156,7 +156,7 @@ export default function Home() {
               </Button>
             </Stack>
           </Flex>
-          <Text fontSize='xs' textAlign='left' color='teal.200'>Format csv dan tedapat dua kolom "Kalimat" dan "Kelas" dengan pembatas titik koma ( ; )</Text>
+          <Text fontSize='xs' textAlign='left' color='teal.200'>Format csv dan tedapat dua kolom Kalimat dan Kelas dengan pembatas titik koma ( ; )</Text>
 
         </FormControl>
         <Box width={{ base: '100%', sm: '95%', md: '80%' }} mx='auto' my={10}>
