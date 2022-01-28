@@ -1,16 +1,28 @@
 {
   "name": "web_ml",
   "private": true,
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.9"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
+    "@chakra-ui/react": "^1.8.1",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "axios": "^0.25.0",
+    "framer-motion": "^5.6.0",
     "next": "12.0.9",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-icons": "^4.3.1"
   },
   "devDependencies": {
     "eslint": "8.7.0",
