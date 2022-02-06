@@ -264,17 +264,17 @@ const NAV_ITEMS: Array<NavItem> = [
         children: [
             {
                 label: 'Kernel',
-                subLabel: 'Linear, Sigmod, rbf',
+                subLabel: 'linear, rbf, poly, sigmoid',
                 href: '#',
             },
             {
                 label: 'C',
-                subLabel: '10, 1, 0.1, 0.01',
+                subLabel: '0.5, 1, 10, 100',
                 href: '#',
             },
             {
                 label: 'Gamma',
-                subLabel: '10, 1, 0.1, 0.01',
+                subLabel: 'scale, 1, 0.1, 0.01, 0.001',
                 href: '#',
             }
         ],

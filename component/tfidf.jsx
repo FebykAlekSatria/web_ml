@@ -12,7 +12,6 @@ export default function TfIdf(props) {
                         TF-IDF.CSV <ExternalLinkIcon mx='2px' />
                     </Link>
                 </Text>
-
             </Box>
         </Center>
     )
