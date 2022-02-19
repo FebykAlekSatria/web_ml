@@ -7,7 +7,7 @@ import { AttachmentIcon, ExternalLinkIcon, MoonIcon, SunIcon } from '@chakra-ui/
 import Prepocessing from '../component/prepocessing';
 import TfIdf from '../component/tfidf';
 import Best from '../component/best';
-import Peforma from '../component/peforma';
+import Training from '../component/training';
 import { MdDataUsage, MdAnalytics, MdFactCheck } from 'react-icons/md'
 import { BsFillArrowRightSquareFill } from 'react-icons/bs'
 import { FaSortNumericUpAlt } from 'react-icons/fa'
@@ -68,7 +68,7 @@ export default function Home() {
   const handlePrepocessing = () => {
     setMenu('pre')
     setLoading(true)
-    axios.post(url + "prepocessing")
+    axios.post(url + "preprocessing")
       .then(function (res) {
         console.log(res.data)
         if (res.data === 0) {
@@ -357,7 +357,7 @@ export default function Home() {
                               {
                                 score.map((data, index) => {
                                   return (
-                                    <Peforma
+                                    <Training
                                       key={index}
                                       tn={confusion[index][0]}
                                       fp={confusion[index][1]}

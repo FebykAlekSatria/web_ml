@@ -12,7 +12,7 @@ import {
     Text
 } from '@chakra-ui/react'
 
-export default function Peforma(props) {
+export default function Training(props) {
     return (
         <Flex wrap="wrap" mx={4}>
             <Table variant='simple' w={40}>
