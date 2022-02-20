@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Flex, FormControl, GridItem, Input, Spacer, Stack, useColorMode, Center, Text, Spinner, Heading, Link, Alert, AlertIcon } from '@chakra-ui/react'
+import { Box, Button, Icon, Flex, FormControl, GridItem, Input, Spacer, Stack, useColorMode, Center, Text, Spinner, Heading, Link, Alert, AlertIcon, Thead, Table, TableCaption, Tr, Th, Tbody, Tfoot, Td } from '@chakra-ui/react'
 import React from 'react';
 import Head from 'next/head'
 import { useState } from 'react'
@@ -230,7 +230,7 @@ export default function Home() {
                   value='pre'
                   fontSize={'sm'}
                   onClick={handlePrepocessing}
-                >Prepocessing</Button>
+                >Preprocessing</Button>
 
               </Stack>
             </Box>
@@ -347,11 +347,46 @@ export default function Home() {
                           <Box>
                             <Text fontWeight='bold' fontSize='xl' textAlign='center'>Training dan Peforma</Text>
                             <Box borderWidth={2} borderRadius={20} borderColor='white' my={2} p={2}>
-                              <Text fontWeight='bold' fontSize='lg'>Persamaan :</Text>
-                              <Text>Accurasy = (TP+TN) / (TP+FP+FN+TN)</Text>
-                              <Text>Precision = (TP) / (TP + FP) </Text>
-                              <Text>Recall = TP / (TP + FN)</Text>
-                              <Text>F1 = (2 * Recall * Precision) / (Recall + Precision)</Text>
+                              <Flex>
+                                <Box margin={10}>
+                                  <Text fontWeight='bold' fontSize='lg'>Persamaan :</Text>
+                                  <Text>Accurasy = (TP+TN) / (TP+FP+FN+TN)</Text>
+                                  <Text>Precision = (TP) / (TP + FP) </Text>
+                                  <Text>Recall = TP / (TP + FN)</Text>
+                                  <Text>F1 = (2 * Recall * Precision) / (Recall + Precision)</Text>
+                                </Box>
+                                <Spacer />
+                                <Table variant='simple' w={20} marginRight={10}>
+                                  <TableCaption>Confusion index</TableCaption>
+                                  <Thead>
+                                    <Tr>
+                                      <Th ></Th>
+                                      <Th isNumeric>OOD</Th>
+                                      <Th isNumeric>ID</Th>
+                                    </Tr>
+                                  </Thead>
+                                  <Tbody>
+                                    <Tr>
+                                      <Th>OOD</Th>
+                                      <Td isNumeric>tp</Td>
+                                      <Td isNumeric>fn</Td>
+                                    </Tr>
+                                    <Tr>
+                                      <Th>ID</Th>
+                                      <Td isNumeric>fp</Td>
+                                      <Td isNumeric>tn</Td>
+                                    </Tr>
+                                  </Tbody>
+                                  <Tfoot>
+                                    <Tr>
+                                      <Th></Th>
+                                      <Th isNumeric>OOD</Th>
+                                      <Th isNumeric>ID</Th>
+                                    </Tr>
+                                  </Tfoot>
+                                </Table>
+                              </Flex>
+
                             </Box>
                             <Flex wrap='wrap'>
                               {
@@ -389,6 +424,7 @@ export default function Home() {
           }
 
         </Box>
+
       </Box>
     </>
   )
