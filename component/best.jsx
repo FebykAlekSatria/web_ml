@@ -16,7 +16,7 @@ export default function Best(props) {
                         <Text fontSize='md'>C : {props.c}</Text>
                     </GridItem>
                     <GridItem colStart={6} colEnd={6}>
-                        <Text fontSize='md'>Gamma : {props.gamma}</Text>
+                        <Text fontSize='md'>Accuracy : {props.acc}</Text>
                     </GridItem>
                 </Grid>
             </Flex>

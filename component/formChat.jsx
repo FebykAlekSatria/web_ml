@@ -24,7 +24,7 @@ export default function FormChat() {
             }
             else {
                 const _stack = [...stack];
-                _stack.push({ 'predict': res.data.predict, "pertanyaan": res.data.pertanyaan })
+                _stack.push({ 'predict': res.data.predict, "pertanyaan": res.data.text })
                 setStack(_stack)
                 setLoading(false)
             }

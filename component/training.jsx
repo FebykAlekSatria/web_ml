@@ -9,48 +9,115 @@ import {
     TableCaption,
     Box,
     Flex,
-    Text
+    Text,
+    Spacer
 } from '@chakra-ui/react'
 
 export default function Training(props) {
     return (
-        <Flex wrap="wrap" mx={4}>
-            <Table variant='simple' w={40}>
-                <TableCaption>Confusion index {props.index}</TableCaption>
+        <Box borderWidth={2} borderRadius={20} borderColor='white' my={4}>
+            <Text fontSize='lg' fontWeight='bold' textAlign='center'><b>Kernel : {props.kernel} C : {props.c}</b></Text>
+            <Box my={2} px={40}>
+                <Table variant='' size='sm' borderWidth={2} textAlign='center'>
+                    <TableCaption>Confusion matrix</TableCaption>
+                    <Thead>
+                        <Tr backgroundColor='teal.400'>
+                            <Th >Uji Ke-</Th>
+                            <Th colSpan={2}>Kelas Positif/OOD</Th>
+                            <Th colSpan={2}>Kelas Negatif/ID</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        <Tr backgroundColor='teal.400'>
+                            <Td></Td>
+                            <Td>TP</Td>
+                            <Td>FP</Td>
+                            <Td>TN</Td>
+                            <Td>FN</Td>
+                        </Tr>
+                        {
+                            props.confusion.map((data, index) => {
+                                return (
+                                    <Tr key={index}>
+                                        <Td>{index + 1}</Td>
+                                        <Td>{data[0]}</Td>
+                                        <Td>{data[1]}</Td>
+                                        <Td>{data[2]}</Td>
+                                        <Td>{data[3]}</Td>
+                                    </Tr>
+                                )
+                            }
+                            )}
+
+                    </Tbody>
+                    <Tfoot>
+
+                    </Tfoot>
+                </Table>
+                <Box fontSize='sm' textAlign='center' my={4}>
+                    <Text fontWeight='bold' >Persamaan :</Text>
+                    <Text>Accurasy = (TP + TN)/ (TP + FP + FN + TN)</Text>
+                    <Text>Precision = (TP) / (TP + FP) </Text>
+                    <Text>Recall = TP / (TP + FN)</Text>
+                    <Text>F-score = (2 * Recall * Precision) / (Recall + Precision)</Text>
+                    <Text>FRR = FN / (FN + TP)</Text>
+                    <Text>FAR = FP / (FP + TN)</Text>
+                </Box>
+
+            </Box>
+            <Table variant='' size='sm'>
+                <TableCaption>Confusion index</TableCaption>
                 <Thead>
-                    <Tr>
-                        <Th ></Th>
-                        <Th isNumeric>OOD</Th>
-                        <Th isNumeric>ID</Th>
+                    <Tr backgroundColor='teal.400'>
+                        <Th>Uji Ke-</Th>
+                        {/* <Th colSpan={2}>Positif</Th>
+                    <Th colSpan={2}>Negatif</Th> */}
+                        <Th>Accurasy</Th>
+                        <Th>Precision</Th>
+                        <Th>Recall</Th>
+                        <Th>F-score</Th>
+                        <Th>FRR</Th>
+                        <Th>FAR</Th>
+                        <Th>Time</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    <Tr>
-                        <Th>OOD</Th>
-                        <Td isNumeric>{props.tp}</Td>
-                        <Td isNumeric>{props.fn}</Td>
+                    <Tr backgroundColor='teal.400'>
+                        <Td></Td>
+                        {/* <Td>TP</Td>
+                    <Td>FP</Td>
+                    <Td>TN</Td>
+                    <Td>FN</Td> */}
+                        <Td></Td>
+                        <Td></Td>
+                        <Td></Td>
+                        <Td></Td>
+                        <Td></Td>
+                        <Td></Td>
+                        <Td></Td>
                     </Tr>
-                    <Tr>
-                        <Th>ID</Th>
-                        <Td isNumeric>{props.fp}</Td>
-                        <Td isNumeric>{props.tn}</Td>
-                    </Tr>
+                    {
+                        props.score.map((data, index) => {
+                            return (
+                                <Tr key={index}>
+                                    <Td>{data[0]}</Td>
+                                    <Td>{data[1]}</Td>
+                                    <Td>{data[2]}</Td>
+                                    <Td>{data[3]}</Td>
+                                    <Td>{data[4]}</Td>
+                                    <Td>{data[5]}</Td>
+                                    <Td>{data[6]}</Td>
+                                    <Td>{data[7]}</Td>
+                                </Tr>
+                            )
+                        })
+                    }
                 </Tbody>
                 <Tfoot>
-                    <Tr>
-                        <Th></Th>
-                        <Th isNumeric>OOD</Th>
-                        <Th isNumeric>ID</Th>
-                    </Tr>
+
                 </Tfoot>
             </Table>
-            <Box m={4} >
-                <Text fontSize='md'>Accurasy : {props.acc}</Text>
-                <Text fontSize='md'>Presisi : {props.pre}</Text>
-                <Text fontSize='md'>Recall : {props.rec}</Text>
-                <Text fontSize='md'>F1 : {props.f1}</Text>
-                <Text fontSize='md'>Time : {props.time}</Text>
-            </Box>
-        </Flex>
+
+        </Box>
     )
 }

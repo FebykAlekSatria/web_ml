@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Flex, FormControl, GridItem, Input, Spacer, Stack, useColorMode, Center, Text, Spinner, Heading, Link, Alert, AlertIcon, Thead, Table, TableCaption, Tr, Th, Tbody, Tfoot, Td } from '@chakra-ui/react'
+import { Box, Button, Icon, Flex, FormControl, GridItem, Input, Spacer, Stack, useColorMode, Center, Text, Spinner, Heading, Link, Alert, AlertIcon, Thead, Table, TableCaption, Tr, Th, Tbody, Tfoot, Td, HStack, FormLabel, RadioGroup, Radio, FormHelperText } from '@chakra-ui/react'
 import React from 'react';
 import Head from 'next/head'
 import { useState } from 'react'
@@ -16,6 +16,7 @@ import NextLink from "next/link"
 
 export default function Home() {
   const [menu, setMenu] = useState('')
+  const [menuHasil, setMenuHasil] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loadingUp, setLoadingUp] = useState(false)
   const { colorMode, toggleColorMode } = useColorMode()
@@ -24,11 +25,10 @@ export default function Home() {
 
   const [score, setScore] = useState([], [])
   const [model, setModel] = useState(false)
-  const [mean, setMean] = useState([])
   const [confusion, setConfusion] = useState([[], []])
-  const [kernel, setKernel] = useState()
-  const [c, setC] = useState('')
-  const [gamma, setGamma] = useState()
+  const [kernel, setKernel] = useState('linear')
+  const [c, setC] = useState(0.1)
+  const [bestAcc, setBestAcc] = useState()
   const [prepocessing, setPrepocessing] = useState([''])
   const [file, setFile] = useState('')
   const [upload, setUpload] = useState('')
@@ -37,6 +37,15 @@ export default function Home() {
 
 
   // const
+  const handleC = (val) => {
+    if (val === '0.1') {
+      setC(0.1)
+    } else if (val === '1') {
+      setC(1)
+    } else {
+      setC(10)
+    }
+  }
   const hendleUpload = () => {
     setLoadingUp(true)
     var formData = new FormData();
@@ -114,7 +123,7 @@ export default function Home() {
           console.log(res)
           setC(res.data.c)
           setKernel(res.data.kernel)
-          setGamma(res.data.gamma)
+          setBestAcc(res.data.score)
           setLoading(false)
           setAlert('')
         }
@@ -124,28 +133,28 @@ export default function Home() {
       })
   }
   const handleTraining = () => {
-    setMenu('train')
     setLoading(true)
     axios.post(url + "training", {
       kernel: kernel,
       c: c,
-      gamma: gamma
     })
       .then(function (res) {
         if (res.data === 0) {
           setAlert('Training gagal')
           setLoading(false)
         } else {
+          console.log(res)
           setConfusion(res.data.confusion)
           setScore(res.data.score)
-          setMean(res.data.means)
           setLoading(false)
           setModel(true)
           setAlert('')
+          setMenuHasil(true)
         }
       }).catch(function (e) {
         console.log(e)
         setLoading(false)
+        setMenuHasil(false)
       })
   }
 
@@ -224,7 +233,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  isDisabled={upload === '' ? true : false}
+                  // isDisabled={upload === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   value='pre'
@@ -246,7 +255,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  isDisabled={prepocessing[0] === '' ? true : false}
+                  // isDisabled={prepocessing[0] === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   fontSize={'sm'}
@@ -268,7 +277,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  isDisabled={tfidf === '' ? true : false}
+                  // isDisabled={tfidf === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   fontSize={'sm'}
@@ -288,10 +297,10 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  isDisabled={c === '' ? true : false}
+                  // isDisabled={c === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
-                  onClick={handleTraining}
+                  onClick={() => setMenu('train')}
                   fontSize={'sm'}
                 >Training & Peforma</Button>
 
@@ -339,90 +348,53 @@ export default function Home() {
                       <Best
                         kernel={kernel}
                         c={c}
-                        gamma={gamma}
+                        acc={bestAcc}
                       />
                       :
-                      menu === 'train' ?
-                        <Center>
-                          <Box>
-                            <Text fontWeight='bold' fontSize='xl' textAlign='center'>Training dan Peforma</Text>
-                            <Box borderWidth={2} borderRadius={20} borderColor='white' my={2} p={2}>
-                              <Flex>
-                                <Box margin={10}>
-                                  <Text fontWeight='bold' fontSize='lg'>Persamaan :</Text>
-                                  <Text>Accurasy = (TP+TN) / (TP+FP+FN+TN)</Text>
-                                  <Text>Precision = (TP) / (TP + FP) </Text>
-                                  <Text>Recall = TP / (TP + FN)</Text>
-                                  <Text>F1 = (2 * Recall * Precision) / (Recall + Precision)</Text>
-                                </Box>
-                                <Spacer />
-                                <Table variant='simple' w={20} marginRight={10}>
-                                  <TableCaption>Confusion index</TableCaption>
-                                  <Thead>
-                                    <Tr>
-                                      <Th ></Th>
-                                      <Th isNumeric>OOD</Th>
-                                      <Th isNumeric>ID</Th>
-                                    </Tr>
-                                  </Thead>
-                                  <Tbody>
-                                    <Tr>
-                                      <Th>OOD</Th>
-                                      <Td isNumeric>tp</Td>
-                                      <Td isNumeric>fn</Td>
-                                    </Tr>
-                                    <Tr>
-                                      <Th>ID</Th>
-                                      <Td isNumeric>fp</Td>
-                                      <Td isNumeric>tn</Td>
-                                    </Tr>
-                                  </Tbody>
-                                  <Tfoot>
-                                    <Tr>
-                                      <Th></Th>
-                                      <Th isNumeric>OOD</Th>
-                                      <Th isNumeric>ID</Th>
-                                    </Tr>
-                                  </Tfoot>
-                                </Table>
-                              </Flex>
-
-                            </Box>
-                            <Flex wrap='wrap'>
-                              {
-                                score.map((data, index) => {
-                                  return (
-                                    <Training
-                                      key={index}
-                                      tn={confusion[index][0]}
-                                      fp={confusion[index][1]}
-                                      fn={confusion[index][2]}
-                                      tp={confusion[index][3]}
-                                      index={data[0]}
-                                      acc={data[1]}
-                                      pre={data[2]}
-                                      rec={data[3]}
-                                      f1={data[4]}
-                                      time={data[5]}
-                                    />
-                                  )
-                                })
-                              }
-
-
-                            </Flex>
-                            <Box m={4} >
-                              <Text fontSize='md'>Accurasy : {mean[1]}</Text>
-                              <Text fontSize='md'>Presisi : {mean[2]}</Text>
-                              <Text fontSize='md'>Recall :{mean[3]}</Text>
-                              <Text fontSize='md'>F1 : {mean[4]}</Text>
-                              <Text fontSize='md'>Time : {mean[5]}</Text>
-                            </Box>
-                          </Box>
-                        </Center>
-                        : null
+                      null
           }
 
+          {
+            menu === 'train' ?
+              <Center>
+                <Box>
+                  <Text fontWeight='bold' fontSize='xl' textAlign='center'>Training dan Peforma</Text>
+                  <Box>
+                    <FormControl as='code'>
+                      <FormLabel as='code'>Silahkan pilih Kernel</FormLabel>
+                      <RadioGroup defaultValue={kernel} onChange={(vel) => setKernel(vel)}>
+                        <HStack spacing='24px'>
+                          <Radio value='linear'>Linear</Radio>
+                          <Radio value='rbf'>RBF</Radio>
+                        </HStack>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormControl as='code'>
+                      <FormLabel as='c'>Silahkan pilih Nilai C</FormLabel>
+                      <RadioGroup defaultValue='0.1' onChange={(vel) => handleC(vel)}>
+                        <HStack spacing='24px'>
+                          <Radio value='0.1'>0.1</Radio>
+                          <Radio value='1'>1</Radio>
+                          <Radio value='10'>10</Radio>
+                        </HStack>
+                      </RadioGroup>
+                    </FormControl>
+                    <Button my={4} size='sm' colorScheme='red' onClick={handleTraining}>Train</Button>
+                  </Box>
+                  {menuHasil ?
+                    <Training
+                      kernel={kernel}
+                      c={c}
+                      score={score}
+                      confusion={confusion}
+                    />
+                    : null
+                  }
+
+                </Box>
+              </Center>
+              : null
+          }
         </Box>
 
       </Box>
