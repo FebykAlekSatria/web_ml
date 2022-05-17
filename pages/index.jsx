@@ -27,13 +27,13 @@ export default function Home() {
   const [model, setModel] = useState(false)
   const [confusion, setConfusion] = useState([[], []])
   const [kernel, setKernel] = useState('linear')
-  const [c, setC] = useState(0.1)
+  const [c, setC] = useState('1')
   const [bestAcc, setBestAcc] = useState()
   const [prepocessing, setPrepocessing] = useState([''])
   const [file, setFile] = useState('')
   const [upload, setUpload] = useState('')
   const [tfidf, setTfidf] = useState('')
-  const url = "http://127.0.0.1:5000/"
+  const url = "https://oodapi.herokuapp.com/"
 
 
   // const
@@ -123,7 +123,7 @@ export default function Home() {
           console.log(res)
           setC(res.data.c)
           setKernel(res.data.kernel)
-          setBestAcc(res.data.score)
+          setBestAcc(res.data.accurasy)
           setLoading(false)
           setAlert('')
         }
@@ -233,7 +233,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  // isDisabled={upload === '' ? true : false}
+                  isDisabled={upload === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   value='pre'
@@ -255,7 +255,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  // isDisabled={prepocessing[0] === '' ? true : false}
+                  isDisabled={prepocessing[0] === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   fontSize={'sm'}
@@ -277,7 +277,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  // isDisabled={tfidf === '' ? true : false}
+                  isDisabled={tfidf === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   fontSize={'sm'}
@@ -297,7 +297,7 @@ export default function Home() {
                   py={2}
                   borderRadius={15}
                   color='white'
-                  // isDisabled={c === '' ? true : false}
+                  isDisabled={c === '' ? true : false}
                   backgroundColor='teal.400'
                   colorScheme='teal'
                   onClick={() => setMenu('train')}
