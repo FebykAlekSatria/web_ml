@@ -16,7 +16,7 @@ import {
 export default function Training(props) {
     return (
         <Box borderWidth={2} borderRadius={20} borderColor='white' my={4}>
-            <Text fontSize='lg' fontWeight='bold' textAlign='center'><b>Kernel : {props.kernel} C : {props.c}</b></Text>
+            {/* <Text fontSize='lg' fontWeight='bold' textAlign='center'><b>Kernel : {props.kernel} C : {props.c}</b></Text> */}
             <Box my={2} px={40}>
                 <Table variant='' size='sm' borderWidth={2} textAlign='center'>
                     <TableCaption>Confusion matrix</TableCaption>
@@ -66,7 +66,7 @@ export default function Training(props) {
 
             </Box>
             <Table variant='' size='sm'>
-                <TableCaption>Confusion index</TableCaption>
+                <TableCaption>Performa</TableCaption>
                 <Thead>
                     <Tr backgroundColor='teal.400'>
                         <Th>Uji Ke-</Th>

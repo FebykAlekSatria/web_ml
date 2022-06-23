@@ -79,7 +79,8 @@ export default function Navbar() {
                         href={'#'}
                         _hover={{
                             bg: 'teal.300',
-                        }}>
+                        }}
+                        disabled>
                         Deteksi
                     </Button>
                 </Stack>
@@ -264,19 +265,14 @@ const NAV_ITEMS: Array<NavItem> = [
         children: [
             {
                 label: 'Kernel',
-                subLabel: 'linear, rbf, poly, sigmoid',
+                subLabel: 'linear, rbf',
                 href: '#',
             },
             {
                 label: 'C',
-                subLabel: '0.5, 1, 10, 100',
+                subLabel: '0.1, 1, 10',
                 href: '#',
             },
-            {
-                label: 'Gamma',
-                subLabel: 'scale, 1, 0.1, 0.01, 0.001',
-                href: '#',
-            }
         ],
     },
 ];

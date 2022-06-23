@@ -27,13 +27,13 @@ export default function Home() {
   const [model, setModel] = useState(false)
   const [confusion, setConfusion] = useState([[], []])
   const [kernel, setKernel] = useState('linear')
-  const [c, setC] = useState('1')
+  const [c, setC] = useState('')
   const [bestAcc, setBestAcc] = useState()
   const [prepocessing, setPrepocessing] = useState([''])
   const [file, setFile] = useState('')
   const [upload, setUpload] = useState('')
   const [tfidf, setTfidf] = useState('')
-  const url = "https://oodapi.herokuapp.com/"
+  const url = "http://127.0.0.1:5000/"
 
 
   // const
@@ -371,7 +371,7 @@ export default function Home() {
                     </FormControl>
                     <FormControl as='code'>
                       <FormLabel as='c'>Silahkan pilih Nilai C</FormLabel>
-                      <RadioGroup defaultValue='0.1' onChange={(vel) => handleC(vel)}>
+                      <RadioGroup defaultValue='1' onChange={(vel) => handleC(vel)}>
                         <HStack spacing='24px'>
                           <Radio value='0.1'>0.1</Radio>
                           <Radio value='1'>1</Radio>

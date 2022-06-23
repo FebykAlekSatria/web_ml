@@ -17,8 +17,8 @@ export default function Prepocessing(props) {
                     </GridItem>
                     <GridItem colStart={4} colEnd={6}>
                         <Text fontSize='md'>Data Prepocessing : <br />
-                            1. [{props.prepos1}] <br />
-                            2. [{props.prepos2}]
+                            1. {props.prepos1} <br />
+                            2. {props.prepos2}
                         </Text>
                     </GridItem>
                 </Grid>
